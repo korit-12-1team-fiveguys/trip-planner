@@ -3,7 +3,6 @@ import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 import GuidePopup from "../components/guide/GuidePopup";
 import "./MainPage.css";
-import MyMapApp from "./MyMapApp";
 
 export default function MainPage() {
   const [openGuidePopup, setOpenGuidePopup] = useState(false);
@@ -25,7 +24,6 @@ export default function MainPage() {
         <main className="map-area" style={{ flexGrow: 1, position: 'relative' }}>
           {/* 여기서 60vh를 주면 위아래에 연두색 여백이 남을 수 있습니다. 꽉 채우려면 100%가 좋습니다. */}
           <div className="map-placeholder" style={{ width: '100%', height: '100%' }}>
-            <MyMapApp/>
           </div>
         </main>
       </div>
