@@ -1,7 +1,7 @@
 package com.fiveguys.trip_planner.controller;
 
 import com.fiveguys.trip_planner.dto.LoginRequest;
-import com.fiveguys.trip_planner.dto.LoginResopnse;
+import com.fiveguys.trip_planner.dto.LoginResponse;
 import com.fiveguys.trip_planner.dto.SignupRequest;
 import com.fiveguys.trip_planner.dto.SignupResponse;
 import com.fiveguys.trip_planner.dto.UserMeResponse;
@@ -26,7 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResopnse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
