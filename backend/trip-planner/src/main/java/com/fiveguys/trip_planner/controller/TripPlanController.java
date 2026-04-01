@@ -1,9 +1,9 @@
 package com.fiveguys.trip_planner.controller;
 
 import com.fiveguys.trip_planner.dto.TripPlanRequestDto;
+import com.fiveguys.trip_planner.dto.TripPlanResponseDto;
 import com.fiveguys.trip_planner.entity.User;
 import com.fiveguys.trip_planner.repository.UserRepository;
-import com.fiveguys.trip_planner.response.TripPlanResponseDto;
 import com.fiveguys.trip_planner.service.TripPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
