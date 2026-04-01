@@ -1,13 +1,13 @@
 package com.fiveguys.trip_planner.service;
 
-import com.fiveguys.trip_planner.common.exception.DuplicateEmailException;
-import com.fiveguys.trip_planner.common.exception.InvalidLoginException;
+import com.fiveguys.trip_planner.exception.DuplicateEmailException;
+import com.fiveguys.trip_planner.exception.InvalidLoginException;
 import com.fiveguys.trip_planner.dto.LoginRequest;
 import com.fiveguys.trip_planner.dto.LoginResopnse;
 import com.fiveguys.trip_planner.dto.SignupRequest;
 import com.fiveguys.trip_planner.dto.SignupResponse;
-import com.fiveguys.trip_planner.user.entity.User;
-import com.fiveguys.trip_planner.user.repository.UserRepository;
+import com.fiveguys.trip_planner.entity.User;
+import com.fiveguys.trip_planner.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,6 +49,10 @@ public class AuthService {
 
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new InvalidLoginException("이메일 또는 비밀번호가 틀렸습니다."));
+
+        if (user.getPassword() == null) {
+            throw new InvalidLoginException("소셜 로그인으로 가입한 계정입니다.");
+        }
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new InvalidLoginException("이메일 또는 비밀번호가 틀렸습니다.");
