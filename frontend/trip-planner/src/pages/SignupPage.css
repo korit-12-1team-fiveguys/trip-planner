@@ -1,0 +1,161 @@
+.signup-page {
+  min-height: 100vh;
+  background-color: #f3f3f3;
+}
+
+.signup-page-body {
+  min-height: calc(100vh - 82px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.signup-card {
+  width: 420px;
+  background-color: transparent;
+}
+
+.signup-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.signup-logo {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.signup-title {
+  margin: 0 0 16px;
+  font-size: 44px;
+  font-weight: 800;
+  color: #1f1f1f;
+}
+
+.signup-subtitle {
+  margin: 0 0 20px;
+  font-size: 15px;
+  color: #666666;
+}
+
+.signup-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  background-color: #ffffff;
+  outline: none;
+}
+
+.signup-input:focus {
+  border-color: #1f1f1f;
+}
+
+.signup-button {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 6px;
+  background-color: #f7b500;
+  color: #111111;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.signup-button:hover {
+  filter: brightness(0.97);
+}
+
+.signup-forgot {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: #1f1f1f;
+  text-decoration: underline;
+}
+
+.signup-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #999;
+}
+
+.signup-divider::before,
+.signup-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.signup-divider::before {
+  margin-right: 12px;
+}
+
+.signup-divider::after {
+  margin-left: 12px;
+}
+
+.social-button {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #d6d6d6;
+  border-radius: 6px;
+  background-color: #ffffff;
+  margin-bottom: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.social-icon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 16px;
+  object-fit: contain;
+}
+
+.social-button-text {
+  text-align: center;
+  width: 100%;
+  color: #1f1f1f;
+}
+
+.social-button:hover {
+  background-color: #f9f9f9;
+}
+
+.signup-input,
+.signup-button {
+  box-sizing: border-box;
+}
+
+.signup-signup {
+  margin-top: 28px;
+  font-size: 14px;
+  color: #555555;
+  text-align: center;
+}
+
+.signup-signup span {
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
