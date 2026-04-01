@@ -1,7 +1,8 @@
 package com.fiveguys.trip_planner.service;
 
 import com.fiveguys.trip_planner.client.GooglePlaceClient;
-import com.fiveguys.trip_planner.dto.GooglePlaceResponse;
+import com.fiveguys.trip_planner.response.GooglePlaceResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,9 @@ public class GooglePlaceService {
     public List<GooglePlaceResponse.Candidate> search(String keyword) {
         GooglePlaceResponse response = googlePlaceClient.searchPlace(keyword);
 
-        if(response == null || response.getCandidates() == null) {
+        if(response == null || response.getPlaces() == null) {
             return List.of();
         }
-
-        return response.getCandidates();
+        return response.getPlaces();
     }
 }
