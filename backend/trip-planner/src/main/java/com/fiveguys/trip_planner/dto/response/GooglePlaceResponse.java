@@ -1,5 +1,6 @@
 package com.fiveguys.trip_planner.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 
@@ -7,25 +8,26 @@ import java.util.List;
 
 @Data
 public class GooglePlaceResponse {
-    private List<Candidate> candidates;
+    private List<Candidate> places;
+
     private String status;
 
     @Data
     public static class Candidate {
-        private String name;
-        private String formatted_address;
-        private Geometry geometry;
-        private String place_id;
-    }
-
-    @Data
-    public static class Geometry {
+        private String id;
+        private String formattedAddress;
+        private DisplayName diplayName;
         private Location location;
     }
 
     @Data
+    public static class DisplayName {
+        private String text;
+    }
+
+    @Data
     public static class Location {
-        private Double lat;
-        private Double lng;
+        private Double latitude;
+        private Double longitude;
     }
 }

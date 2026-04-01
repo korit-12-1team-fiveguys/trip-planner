@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class PlaceService {
@@ -15,6 +17,12 @@ public class PlaceService {
 
     @Transactional
     public PlaceResponseDto createPlace(PlaceRequestDto requestDto) {
+        Optional<Place> existingPlace = placeRepository.findByExternalPlaceId(requestDto.getExternalPlaceId());
+
+        if (existingPlace.isPresent()) {
+            return new PlaceResponseDto(existingPlace.get());
+        }
+
         Place place = new Place();
         place.setName(requestDto.getName());
         place.setAddress(requestDto.getAddress());
