@@ -16,7 +16,7 @@ public class GooglePlaceResponse {
     public static class Candidate {
         private String id;
         private String formattedAddress;
-        private DisplayName diplayName;
+        private DisplayName displayName;
         private Location location;
     }
 
