@@ -2,26 +2,22 @@ package com.fiveguys.trip_planner.service;
 
 import com.fiveguys.trip_planner.dto.TripPlanRequestDto;
 import com.fiveguys.trip_planner.dto.TripPlanResponseDto;
-import com.fiveguys.trip_planner.entity.TripDay;
-import com.fiveguys.trip_planner.entity.TripMember;
-import com.fiveguys.trip_planner.entity.TripPlan;
-import com.fiveguys.trip_planner.entity.User;
-import com.fiveguys.trip_planner.repository.TripDayRepository;
+import com.fiveguys.trip_planner.dto.TripScheduleRequestDto;
+import com.fiveguys.trip_planner.entity.*;
+
 import com.fiveguys.trip_planner.repository.TripMemberRepository;
 import com.fiveguys.trip_planner.repository.TripPlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TripPlanService {
     private final TripPlanRepository tripPlanRepository;
-    private final TripDayRepository tripDayRepository;
     private final TripMemberRepository tripMemberRepository;
 
     @Transactional
@@ -34,6 +30,24 @@ public class TripPlanService {
         tripPlan.setEndDate(requestDto.getEndDate());
         tripPlan.setStatus("PLANNING");
 
+        if (requestDto.getSchedules() != null) {
+            for (TripScheduleRequestDto scheduleRequestDto : requestDto.getSchedules()) {
+                TripSchedule schedule = new TripSchedule();
+
+                schedule.setTripPlan(tripPlan);
+
+                schedule.setDayNumber(scheduleRequestDto.getDayNumber());
+                schedule.setTitle(scheduleRequestDto.getTitle());
+                schedule.setVisitOrder(scheduleRequestDto.getVisitOrder());
+                schedule.setStartTime(scheduleRequestDto.getStartTime());
+                schedule.setEndTime(scheduleRequestDto.getEndTime());
+                schedule.setMemo(scheduleRequestDto.getMemo());
+                schedule.setEstimatedStayMinutes(scheduleRequestDto.getEstimatedStayMinutes());
+
+                tripPlan.getSchedules().add(schedule);
+            }
+        }
+
         TripPlan savePlan = tripPlanRepository.save(tripPlan);
 
         TripMember ownerMember = new TripMember();
@@ -42,18 +56,23 @@ public class TripPlanService {
         ownerMember.setRole("OWNER");
         tripMemberRepository.save(ownerMember);
 
-        long days = ChronoUnit.DAYS.between(requestDto.getStartDate(), requestDto.getEndDate()) +1;
-
-        List<TripDay> tripDays = new ArrayList<>();
-        for(int i = 0; i < days; i++) {
-            TripDay tripDay = new TripDay();
-            tripDay.setTripPlan(savePlan);
-            tripDay.setDayNumber(i+1);
-            tripDay.setDate(requestDto.getStartDate().plusDays(i));
-            tripDays.add(tripDay);
-        }
-        tripDayRepository.saveAll(tripDays);
 
         return new TripPlanResponseDto(savePlan);
+    }
+
+    @Transactional(readOnly = true)
+    public TripPlanResponseDto getTripPlan(Long tripId) {
+        TripPlan tripPlan = tripPlanRepository.findById(tripId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 여행 계획을 찾을 수 없습니다."));
+        return new TripPlanResponseDto(tripPlan);
+    }
+
+    @Transactional(readOnly = true)
+    public List<TripPlanResponseDto> getMyTripPlans(User user) {
+        List<TripMember> memberships = tripMemberRepository.findByUser(user);
+
+        return memberships.stream()
+                .map(member -> new TripPlanResponseDto(member.getTripPlan()))
+                .collect(Collectors.toList());
     }
 }

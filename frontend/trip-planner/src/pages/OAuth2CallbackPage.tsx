@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
 
-export default function GoogleCallbackPage() {
+export default function OAuth2CallbackPage() {
   const navigate = useNavigate();
   const isHandled = useRef(false);
 
@@ -37,7 +37,7 @@ export default function GoogleCallbackPage() {
           color: "#333",
         }}
       >
-        구글 로그인 처리 중...
+        로그인 처리 중...
       </div>
     </div>
   );

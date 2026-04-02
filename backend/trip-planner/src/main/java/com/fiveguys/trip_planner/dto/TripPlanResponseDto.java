@@ -6,17 +6,21 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter @Setter
+@Getter
 public class TripPlanResponseDto {
-    private Long id;
-    private Long ownerId;
-    private String title;
-    private String destination;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private String status;
-    private LocalDateTime createdAt;
+    private final Long id;
+    private final Long ownerId;
+    private final String title;
+    private final String destination;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final String status;
+    private final LocalDateTime createdAt;
+
+    private List<TripScheduleResponseDto> schedules;
 
     public TripPlanResponseDto(TripPlan tripPlan) {
         this.id = tripPlan.getId();
@@ -27,5 +31,11 @@ public class TripPlanResponseDto {
         this.endDate = tripPlan.getEndDate();
         this.status = tripPlan.getStatus();
         this.createdAt = tripPlan.getCreatedAt();
+
+        if (tripPlan.getSchedules() != null) {
+            this.schedules = tripPlan.getSchedules().stream()
+                    .map(TripScheduleResponseDto::new)
+                    .collect(Collectors.toList());
+        }
     }
 }
