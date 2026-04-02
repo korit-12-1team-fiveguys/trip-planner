@@ -3,7 +3,7 @@ import MainPage from "../../pages/MainPage";
 import LoginPage from "../../pages/LoginPage";
 import SignupPage from "../../pages/SignupPage";
 import MyPage from "../../pages/MyPage";
-import GoogleCallbackPage from "../../pages/GoogleCallbackPage";
+import OAuth2CallbackPage from "../../pages/OAuth2CallbackPage";
 
 
 export default function Router() {
@@ -19,7 +19,7 @@ export default function Router() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/google/callback" element={<GoogleCallbackPage />} />
+        <Route path="/google/callback" element={<OAuth2CallbackPage />} />
       </Routes>
     </BrowserRouter>
   );

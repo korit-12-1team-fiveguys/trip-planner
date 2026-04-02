@@ -5,7 +5,6 @@ import KakaoIcon from "../assets/icons/Kakao.png";
 import GoogleIcon from "../assets/icons/google.png";
 import LogoIcon from "../assets/icons/logo.png";
 import "./LoginPage.css";
-import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   // 1. 입력 데이터를 관리할 State 생성
@@ -13,8 +12,6 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-
-  const navigator = useNavigate();
 
   // 2. 입력값이 변경될 때 호출되는 핸들러
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +55,10 @@ export default function LoginPage() {
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
+
+  const handleKakaoLogin = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/kakao";
+  }
 
 
   return (
@@ -103,7 +104,7 @@ export default function LoginPage() {
 
           <div className="login-divider">또는</div>
 
-          <button className="social-button" onClick={() => console.log("카카오 로그인 클릭")}>
+          <button className="social-button" onClick={handleKakaoLogin}>
             <img src={KakaoIcon} alt="카카오 아이콘" className="social-icon"/>
             <span className="social-button-text">Kakao 계정으로 진행하기</span>
           </button>
