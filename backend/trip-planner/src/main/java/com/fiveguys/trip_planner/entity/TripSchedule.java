@@ -14,9 +14,13 @@ public class TripSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 기존에 TripDay로 연결되어있어서 TripPlan으로 연결 방향 전환(며칠 차 직접 입력한다고 해서 수정)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trip_day_id", nullable = false)
-    private TripDay tripDay;
+    @JoinColumn(name = "trip_plan_id", nullable = false)
+    private TripPlan tripPlan;
+    // 직접 입력한 일 차 저장할 필드
+    @Column(nullable = false)
+    private Integer dayNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")

@@ -3,12 +3,12 @@ package com.fiveguys.trip_planner.dto;
 import com.fiveguys.trip_planner.entity.Place;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class PlaceResponseDto {
     private Long id;
