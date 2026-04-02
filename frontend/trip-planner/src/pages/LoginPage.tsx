@@ -5,6 +5,7 @@ import KakaoIcon from "../assets/icons/Kakao.png";
 import GoogleIcon from "../assets/icons/google.png";
 import LogoIcon from "../assets/icons/logo.png";
 import "./LoginPage.css";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   // 1. 입력 데이터를 관리할 State 생성
@@ -12,6 +13,8 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+
+  const navigator = useNavigate();
 
   // 2. 입력값이 변경될 때 호출되는 핸들러
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,15 +26,32 @@ export default function LoginPage() {
   };
 
   // 3. 로그인 버튼 클릭 시 호출되는 핸들러
-  const handleSubmit = () => {
-    if (!formData.email || !formData.password) {
-      alert("이메일과 비밀번호를 모두 입력해주세요.");
-      return;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // 1. 토큰 저장 (가장 먼저!)
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("isLoggedIn", "true");
+
+        // 2. ⚡️ 가장 확실한 방법: 새로고침 이동
+        // navigate("/") 대신 아래를 쓰면 Header가 처음부터 다시 시작하며 500 에러를 안 냅니다.
+        window.location.href = "/"; 
+    } else {
+        console.error("로그인 실패");
+      }
+    } catch (error) {
+      console.error("네트워크 오류:", error);
     }
-    
-    console.log("로그인 시도 데이터:", formData);
-    alert(`로그인 시도: ${formData.email}`);
-    // 여기서 실제 API 호출(axios 등)을 진행하면 됩니다.
   };
 
   // 🔥 핵심: 구글 로그인 이동 함수
