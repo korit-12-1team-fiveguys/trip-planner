@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/google-places")
+@RequestMapping("/api/google-places")
 @RequiredArgsConstructor
 public class GooglePlaceController {
     private final GooglePlaceService googlePlaceService;

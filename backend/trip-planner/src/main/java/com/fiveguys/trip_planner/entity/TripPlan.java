@@ -50,4 +50,7 @@ public class TripPlan {
 
     @OneToMany(mappedBy = "tripPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TripSchedule> schedules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tripPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TripMember> members = new ArrayList<>();
 }

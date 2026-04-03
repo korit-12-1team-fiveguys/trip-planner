@@ -75,4 +75,48 @@ public class TripPlanService {
                 .map(member -> new TripPlanResponseDto(member.getTripPlan()))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public TripPlanResponseDto updateTripPlan (Long tripId, TripPlanRequestDto requestDto, User user) {
+        TripPlan tripPlan = tripPlanRepository.findById(tripId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 여행 계획을 찾을 수 없습니다."));
+
+        if(!tripPlan.getOwner().getId().equals(user.getId())) {
+            throw new IllegalStateException("수정 권한이 없습니다.");
+        }
+
+        tripPlan.setTitle(requestDto.getTitle());
+        tripPlan.setDestination(requestDto.getDestination());
+        tripPlan.setStartDate(requestDto.getStartDate());
+        tripPlan.setEndDate(requestDto.getEndDate());
+
+        tripPlan.getSchedules().clear();
+        if(requestDto.getSchedules() != null) {
+            for(TripScheduleRequestDto scheduleRequestDto : requestDto.getSchedules()) {
+                TripSchedule schedule = new TripSchedule();
+                schedule.setTripPlan(tripPlan);
+                schedule.setDayNumber(scheduleRequestDto.getDayNumber());
+                schedule.setTitle(scheduleRequestDto.getTitle());
+                schedule.setVisitOrder(scheduleRequestDto.getVisitOrder());
+                schedule.setStartTime(scheduleRequestDto.getStartTime());
+                schedule.setEndTime(scheduleRequestDto.getEndTime());
+                schedule.setMemo(scheduleRequestDto.getMemo());
+                schedule.setEstimatedStayMinutes(scheduleRequestDto.getEstimatedStayMinutes());
+
+                tripPlan.getSchedules().add(schedule);
+            }
+        }
+        return new TripPlanResponseDto(tripPlan);
+    }
+
+    @Transactional
+    public void deleteTripPlan(Long tripId, User user) {
+        TripPlan tripPlan = tripPlanRepository.findById(tripId)
+                .orElseThrow(() -> new IllegalStateException("해당 여행 계획을 찾을 수 없습니다."));
+
+        if(!tripPlan.getOwner().getId().equals(user.getId())) {
+            throw new IllegalStateException("삭제 권한이 없습니다.");
+        }
+        tripPlanRepository.delete(tripPlan);
+    }
 }
