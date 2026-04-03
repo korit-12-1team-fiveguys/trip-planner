@@ -13,6 +13,52 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+//@Component
+//@RequiredArgsConstructor
+//public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+//
+//    private final UserRepository userRepository;
+//    private final RefreshTokenRepository refreshTokenRepository;
+//    private final JwtTokenProvider jwtTokenProvider;
+//
+//    @Override
+//    public void onAuthenticationSuccess(HttpServletRequest request,
+//                                        HttpServletResponse response,
+//                                        Authentication authentication) throws IOException {
+//
+//        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+//
+//        String provider = (String) oAuth2User.getAttributes().get("provider");
+//        String providerId = (String) oAuth2User.getAttributes().get("providerId");
+//
+//        if (provider == null || provider.isBlank() || providerId == null || providerId.isBlank()) {
+//            throw new IllegalArgumentException("OAuth2 로그인 사용자 식별 정보를 찾을 수 없습니다.");
+//        }
+//
+//        User user = userRepository.findByProviderAndProviderId(provider, providerId)
+//                .orElseThrow(() -> new IllegalArgumentException("OAuth2 로그인 사용자 정보를 찾을 수 없습니다."));
+//
+//        String accessToken = jwtTokenProvider.createAccessToken(user);
+//        String refreshToken = jwtTokenProvider.createRefreshToken(user);
+//
+//        RefreshToken refreshTokenEntity = RefreshToken.create(
+//                user.getId(),
+//                refreshToken,
+//                jwtTokenProvider.getRefreshTokenExpiration()
+//        );
+//
+//        refreshTokenRepository.save(refreshTokenEntity);
+//
+//        response.setContentType("application/json;charset=UTF-8");
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        response.getWriter().write(
+//                "{\"accessToken\":\"" + accessToken + "\",\"refreshToken\":\"" + refreshToken + "\"}"
+//        );
+//    }
+//}
 
 @Component
 @RequiredArgsConstructor
@@ -33,11 +79,17 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         String providerId = (String) oAuth2User.getAttributes().get("providerId");
 
         if (provider == null || provider.isBlank() || providerId == null || providerId.isBlank()) {
-            throw new IllegalArgumentException("OAuth2 로그인 사용자 식별 정보를 찾을 수 없습니다.");
+            response.sendRedirect("http://localhost:5173/login?error=oauth2_user_not_found");
+            return;
         }
 
         User user = userRepository.findByProviderAndProviderId(provider, providerId)
-                .orElseThrow(() -> new IllegalArgumentException("OAuth2 로그인 사용자 정보를 찾을 수 없습니다."));
+                .orElse(null);
+
+        if (user == null) {
+            response.sendRedirect("http://localhost:5173/login?error=user_not_found");
+            return;
+        }
 
         String accessToken = jwtTokenProvider.createAccessToken(user);
         String refreshToken = jwtTokenProvider.createRefreshToken(user);
@@ -50,10 +102,11 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         refreshTokenRepository.save(refreshTokenEntity);
 
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(
-                "{\"accessToken\":\"" + accessToken + "\",\"refreshToken\":\"" + refreshToken + "\"}"
-        );
+        String redirectUrl =
+                "http://localhost:5173/oauth2/callback" +
+                        "?accessToken=" + URLEncoder.encode(accessToken, StandardCharsets.UTF_8) +
+                        "&refreshToken=" + URLEncoder.encode(refreshToken, StandardCharsets.UTF_8);
+
+        response.sendRedirect(redirectUrl);
     }
 }

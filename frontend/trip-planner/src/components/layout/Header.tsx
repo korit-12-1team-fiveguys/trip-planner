@@ -93,7 +93,7 @@ export default function Header() {
             ) : (
               <>
                 <Button
-                  className="header-login-btn"
+                  className="header-login-signup-btn"
                   onClick={() => navigate("/login")}
                 >
                   로그인

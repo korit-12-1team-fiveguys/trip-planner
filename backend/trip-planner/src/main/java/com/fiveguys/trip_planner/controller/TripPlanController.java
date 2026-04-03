@@ -37,4 +37,18 @@ public class TripPlanController {
         List<TripPlanResponseDto> responseDto = tripPlanService.getMyTripPlans(user);
         return ResponseEntity.ok(responseDto);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<TripPlanResponseDto> updateTripPlan(@PathVariable Long id,
+                                                              @RequestBody TripPlanRequestDto requestDto,
+                                                              @AuthenticationPrincipal User user) {
+        TripPlanResponseDto responseDto = tripPlanService.updateTripPlan(id, requestDto, user);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTripPlan(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        tripPlanService.deleteTripPlan(id, user);
+        return ResponseEntity.noContent().build();
+    }
 }

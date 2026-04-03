@@ -19,7 +19,7 @@ export default function Router() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/google/callback" element={<OAuth2CallbackPage />} />
+        <Route path="/oauth2/callback" element={<OAuth2CallbackPage />} />
       </Routes>
     </BrowserRouter>
   );
