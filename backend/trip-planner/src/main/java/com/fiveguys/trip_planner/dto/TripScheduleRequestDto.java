@@ -17,4 +17,10 @@ public class TripScheduleRequestDto {
     private LocalTime endTime;
     private String memo;
     private Integer estimatedStayMinutes;
+
+    private String placeName;
+    private String placeAddress;
+    private java.math.BigDecimal latitude;
+    private java.math.BigDecimal longitude;
+    private String googlePlaceId;
 }

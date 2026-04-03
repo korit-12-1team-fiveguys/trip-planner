@@ -4,6 +4,7 @@ import com.fiveguys.trip_planner.entity.TripSchedule;
 import lombok.Getter;
 
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 @Getter
@@ -17,6 +18,12 @@ public class TripScheduleResponseDto {
     private final String memo;
     private final Integer estimatedStayMinutes;
 
+    private String placeName;
+    private String placeAddress;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
+    private String googlePlaceId;
+
     public TripScheduleResponseDto(TripSchedule schedule) {
         this.id = schedule.getId();
         this.dayNumber = schedule.getDayNumber();
@@ -26,5 +33,13 @@ public class TripScheduleResponseDto {
         this.endTime = schedule.getEndTime();
         this.memo = schedule.getMemo();
         this.estimatedStayMinutes = schedule.getEstimatedStayMinutes();
+
+        if(schedule.getPlace() != null) {
+            this.placeName = schedule.getPlace().getName();
+            this.placeAddress = schedule.getPlace().getAddress();
+            this.latitude = schedule.getPlace().getLatitude();
+            this.longitude = schedule.getPlace().getLongitude();
+            this.googlePlaceId = schedule.getPlace().getExternalPlaceId();
+        }
     }
 }

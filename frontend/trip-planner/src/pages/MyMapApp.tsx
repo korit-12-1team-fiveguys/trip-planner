@@ -132,8 +132,8 @@ export default function MyMapApp({ searchKeyword }: { searchKeyword: string }) {
   
   // 색상 상태
   const [pinColor, setPinColor] = useState("#000000");
-  const [selectedPinColor, setSelectedPinColor] = useState("#FF4D4F");
-  const [lineColor, setLineColor] = useState("#4285F4");
+  const [selectedPinColor, setSelectedPinColor] = useState("#4285F4");
+  const [lineColor, setLineColor] = useState("#FF4D4F");
 
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [editValue, setEditValue] = useState("");

@@ -1,5 +1,4 @@
 import { AppBar, Toolbar, Button } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -12,29 +11,29 @@ import { getMe } from "../api/auth.ts";
 interface UserInfo {
   id: number;
   email: string;
-  name: string;
-  role: string;
-  status: string;
+  name?: string;
+  nickname?: string;
+  phone?: string;
+  role?: string;
+  status?: string;
 }
 
 export default function Header() {
-  // 초기화
   const navigate = useNavigate();
   const [openTutorial, setOpenTutorial] = useState(false);
   const [user, setUser] = useState<UserInfo | null>(null);
 
-  // Header.tsx 내부
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("accessToken");
 
-      // 💡 토큰이 없으면 서버에 물어보지도 마! (이게 없으면 계속 500 뜹니다)
       if (!token || token === "undefined") {
-        return; 
+        return;
       }
 
       try {
         const userData = await getMe();
+        console.log("getMe 응답:", userData);
         setUser(userData);
       } catch (error) {
         console.error("사용자 정보 조회 실패:", error);
@@ -47,11 +46,14 @@ export default function Header() {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("isLoggedIn");
+    localStorage.setItem("isLoggedIn", "false");
     setUser(null);
     alert("로그아웃되었습니다.");
     navigate("/login");
   };
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const displayName = user?.nickname || user?.name || "";
 
   return (
     <>
@@ -70,21 +72,21 @@ export default function Header() {
 
           <div className="header-actions">
             <span className="header-icon">
-              <SearchIcon />
-            </span>
-            <span className="header-icon">
-              <button onClick={CalculatorService.openCalculator}
-                style={{ background: "none", border: "none", cursor: "pointer" }}>
+              <button
+                onClick={CalculatorService.openCalculator}
+                style={{ background: "none", border: "none", cursor: "pointer" }}
+              >
                 <ShoppingCartOutlinedIcon />
               </button>
             </span>
-            {localStorage.getItem("isLoggedIn") ? (
+
+            {isLoggedIn ? (
               <>
                 <Button
                   className="header-login-btn"
                   onClick={() => navigate("/mypage")}
                 >
-                  {user?.name}님
+                  {displayName ? `${displayName}님` : "마이페이지"}
                 </Button>
                 <Button className="header-login-btn" onClick={handleLogout}>
                   로그아웃
@@ -100,12 +102,12 @@ export default function Header() {
                 </Button>
                 <Button
                   className="header-login-signup-btn"
-                  onClick={() => navigate("/signup")}>
+                  onClick={() => navigate("/signup")}
+                >
                   회원가입
                 </Button>
               </>
             )}
-
           </div>
         </Toolbar>
       </AppBar>

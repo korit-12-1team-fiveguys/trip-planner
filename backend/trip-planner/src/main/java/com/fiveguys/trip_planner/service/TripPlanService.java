@@ -5,6 +5,7 @@ import com.fiveguys.trip_planner.dto.TripPlanResponseDto;
 import com.fiveguys.trip_planner.dto.TripScheduleRequestDto;
 import com.fiveguys.trip_planner.entity.*;
 
+import com.fiveguys.trip_planner.repository.PlaceRepository;
 import com.fiveguys.trip_planner.repository.TripMemberRepository;
 import com.fiveguys.trip_planner.repository.TripPlanRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class TripPlanService {
     private final TripPlanRepository tripPlanRepository;
     private final TripMemberRepository tripMemberRepository;
+    private final PlaceRepository placeRepository;
 
     @Transactional
     public TripPlanResponseDto createTripPlan(TripPlanRequestDto requestDto, User user) {
@@ -33,9 +35,7 @@ public class TripPlanService {
         if (requestDto.getSchedules() != null) {
             for (TripScheduleRequestDto scheduleRequestDto : requestDto.getSchedules()) {
                 TripSchedule schedule = new TripSchedule();
-
                 schedule.setTripPlan(tripPlan);
-
                 schedule.setDayNumber(scheduleRequestDto.getDayNumber());
                 schedule.setTitle(scheduleRequestDto.getTitle());
                 schedule.setVisitOrder(scheduleRequestDto.getVisitOrder());
@@ -44,6 +44,19 @@ public class TripPlanService {
                 schedule.setMemo(scheduleRequestDto.getMemo());
                 schedule.setEstimatedStayMinutes(scheduleRequestDto.getEstimatedStayMinutes());
 
+                if(scheduleRequestDto.getGooglePlaceId() != null) {
+                    Place place = placeRepository.findByExternalPlaceId(scheduleRequestDto.getGooglePlaceId())
+                            .orElseGet(() -> {
+                                Place newPlace = new Place();
+                                newPlace.setName(scheduleRequestDto.getPlaceName());
+                                newPlace.setAddress(scheduleRequestDto.getPlaceAddress());
+                                newPlace.setLatitude(scheduleRequestDto.getLatitude());
+                                newPlace.setLongitude(scheduleRequestDto.getLongitude());
+                                newPlace.setExternalPlaceId(scheduleRequestDto.getGooglePlaceId());
+                                return placeRepository.save(newPlace);
+                            });
+                    schedule.setPlace(place);
+                }
                 tripPlan.getSchedules().add(schedule);
             }
         }
@@ -91,6 +104,7 @@ public class TripPlanService {
         tripPlan.setEndDate(requestDto.getEndDate());
 
         tripPlan.getSchedules().clear();
+
         if(requestDto.getSchedules() != null) {
             for(TripScheduleRequestDto scheduleRequestDto : requestDto.getSchedules()) {
                 TripSchedule schedule = new TripSchedule();
@@ -102,6 +116,20 @@ public class TripPlanService {
                 schedule.setEndTime(scheduleRequestDto.getEndTime());
                 schedule.setMemo(scheduleRequestDto.getMemo());
                 schedule.setEstimatedStayMinutes(scheduleRequestDto.getEstimatedStayMinutes());
+
+                if(scheduleRequestDto.getGooglePlaceId() != null) {
+                    Place place = placeRepository.findByExternalPlaceId(scheduleRequestDto.getGooglePlaceId())
+                            .orElseGet(() -> {
+                                Place newPlace = new Place();
+                                newPlace.setName(scheduleRequestDto.getPlaceName());
+                                newPlace.setAddress(scheduleRequestDto.getPlaceAddress());
+                                newPlace.setLatitude(scheduleRequestDto.getLatitude());
+                                newPlace.setLongitude(scheduleRequestDto.getLongitude());
+                                newPlace.setExternalPlaceId(scheduleRequestDto.getGooglePlaceId());
+                                return placeRepository.save(newPlace);
+                            });
+                    schedule.setPlace(place);
+                }
 
                 tripPlan.getSchedules().add(schedule);
             }
