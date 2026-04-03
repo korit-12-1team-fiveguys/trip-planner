@@ -74,8 +74,7 @@ public class User {
         user.setEmail(email);
         user.setPassword(null);
         user.setName(name);
-//        user.setNickname(name);
-        user.setNickname(provider + "_" + providerId); // 추가
+        user.setNickname(name);
         user.setPhone(null);
         user.setRole("USER");
         user.setStatus("ACTIVE");

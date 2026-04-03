@@ -119,6 +119,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             user.setEmail(userInfo.email());
         }
         user.setName(userInfo.name());
+
+        if (user.getNickname() == null || user.getNickname().isBlank() // 추가
+                || user.getNickname().startsWith("google_")
+                || user.getNickname().startsWith("kakao_")
+                || user.getNickname().startsWith("GOOGLE_")
+                || user.getNickname().startsWith("KAKAO_")) {
+            user.setNickname(userInfo.name());
+        }
+
         return userRepository.save(user);
     }
 
