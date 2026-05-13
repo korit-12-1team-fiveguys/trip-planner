@@ -71,7 +71,6 @@
     <td width="50%" valign="top">
       <h3>📋 커뮤니티 게시판 공유</h3>
       <img width="773" height="762" alt="communityShare" src="https://github.com/user-attachments/assets/995423fa-c4cd-421a-be7f-5f9cdb2d4c27" />
-      <img width="1154" height="735" alt="community1" src="https://github.com/user-attachments/assets/3f32d868-8829-4977-8261-6088a281bb7a" />
       <img width="1154" height="735" alt="community2" src="https://github.com/user-attachments/assets/6ccaf144-3194-484d-8147-040f10899305" />
       <ul>
         <li>완성된 여행 계획을 커뮤니티에 공유</li>
