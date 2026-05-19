@@ -59,7 +59,7 @@
 
 <table>
   <tr>
-    <td width="50%" valign="top">
+    <td valign="top">
       <h3>🗺️ 지도 기반 동선 계획</h3>
       <img width="1563" height="769" alt="baselogic" src="https://github.com/user-attachments/assets/773af146-ef82-4d8b-970b-0edc5e8d8f80" />
       <ul>
@@ -68,7 +68,9 @@
         <li>장소별 상세 메모로 세부 일정 기록</li>
       </ul>
     </td>
-    <td width="50%" valign="top">
+  </tr>
+  <tr>
+    <td valign="top">
       <h3>📋 커뮤니티 게시판 공유</h3>
       <img width="773" height="762" alt="communityShare" src="https://github.com/user-attachments/assets/995423fa-c4cd-421a-be7f-5f9cdb2d4c27" />
       <ul>
@@ -77,7 +79,9 @@
         <li>좋아요 및 이미지 업로드 지원</li>
       </ul>
     </td>
-    <td width="50%" valign="top">
+  </tr>
+  <tr>
+    <td valign="top">
       <h3>🤖 AI 챗봇</h3>
       <img width="886" height="873" alt="chatbot" src="https://github.com/user-attachments/assets/e49c60cd-f54a-4f9c-bb33-05d59d9725b6" />
       <ul>
@@ -85,7 +89,9 @@
         <li>AI 기반 여행 비서 실시간 채팅</li>
       </ul>
     </td>
-    <td width="50%" valign="top">
+  </tr>
+  <tr>
+    <td valign="top">
       <h3>💬 실시간 관리자 문의</h3>
       <img width="1169" height="577" alt="adminTalk (2)" src="https://github.com/user-attachments/assets/86141ef3-0c3e-4ee5-ace1-727d338633e0" />
       <img width="1494" height="735" alt="talk" src="https://github.com/user-attachments/assets/c354cbdf-8f56-446f-9da9-d177860f22c6" />
@@ -94,7 +100,9 @@
         <li>SSE를 활용한 실시간 알림 서비스</li>
       </ul>
     </td>
-    <td width="50%" valign="top">
+  </tr>
+  <tr>
+    <td valign="top">
       <h3>💰 경비 관리 Dashboard</h3>
       <img width="521" height="763" alt="calculator" src="https://github.com/user-attachments/assets/6805ba50-d50b-4825-a0de-4f022c9031a8" />
       <ul>
@@ -103,13 +111,16 @@
         <li>예산 현황 파악</li>
       </ul>
     </td>
-    <td width="50%" valign="top">
+  </tr>
+  <tr>
+    <td valign="top">
       <h3>👤 관리자 페이지</h3>
       <img width="851" height="839" alt="banned" src="https://github.com/user-attachments/assets/3deef630-3385-4acb-8fa1-34f242c23dc5" />
       <ul>
         <li>다른 유저들 관리</li>
       </ul>
     </td>
+  </tr>
 </table>
 
 <br>
