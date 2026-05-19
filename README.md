@@ -77,6 +77,8 @@
         <li>좋아요 및 이미지 업로드 지원</li>
       </ul>
     </td>
+  </tr>
+  <tr>
     <td width="50%" valign="top">
       <h3>🤖 AI 챗봇</h3>
       <img width="886" height="873" alt="chatbot" src="https://github.com/user-attachments/assets/e49c60cd-f54a-4f9c-bb33-05d59d9725b6" />
@@ -94,6 +96,8 @@
         <li>SSE를 활용한 실시간 알림 서비스</li>
       </ul>
     </td>
+  </tr>
+  <tr>
     <td width="50%" valign="top">
       <h3>💰 경비 관리 Dashboard</h3>
       <img width="521" height="763" alt="calculator" src="https://github.com/user-attachments/assets/6805ba50-d50b-4825-a0de-4f022c9031a8" />
