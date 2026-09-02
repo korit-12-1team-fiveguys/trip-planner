@@ -4,6 +4,10 @@
 
 https://trip-planner-eight-zeta.vercel.app/
 
+## 배포 안내
+현재 GCP 운영 비용 문제로 실제 서비스는 종료된 상태입니다.
+프론트엔드는 [배포 링크]에서 확인 가능하나, API 연동 기능은 정상 동작하지 않습니다.
+
 <br>
 <div align="center">
 <!-- 라이브 데모 버튼 -->
